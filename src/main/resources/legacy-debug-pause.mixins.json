@@ -3,8 +3,8 @@
   "package": "dev.tildejustin.legacy_debug_pause.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "GameMenuScreenMixin",
-    "MinecraftClientMixin"
+    "class_4110Mixin",
+    "GameMenuScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
