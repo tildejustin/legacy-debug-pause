@@ -18,6 +18,6 @@
     "legacy-debug-pause.mixins.json"
   ],
   "depends": {
-    "minecraft": "*"
+    "minecraft": ">=1.7.10 <1.13"
   }
 }
