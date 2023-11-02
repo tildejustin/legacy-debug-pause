@@ -4,8 +4,6 @@ import dev.tildejustin.legacy_debug_pause.interfaces.IGameMenuScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.sound.SoundSystem;
-import net.minecraft.server.integrated.IntegratedServer;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,15 +21,6 @@ public abstract class MinecraftMixin {
     @Shadow
     public abstract void openScreen(Screen screen);
 
-    @Shadow
-    public abstract boolean isInSingleplayer();
-
-    @Shadow
-    private IntegratedServer server;
-
-    @Shadow
-    public SoundSystem soundSystem;
-
     @SuppressWarnings("DataFlowIssue")
     @Unique
     public void openGameMenuScreen(boolean pause) {
@@ -39,9 +28,6 @@ public abstract class MinecraftMixin {
             GameMenuScreen screen = new GameMenuScreen();
             if (pause) ((IGameMenuScreen) screen).hideMenu();
             this.openScreen(screen);
-            if (this.isInSingleplayer() && !this.server.isPublished()) {
-                this.soundSystem.method_4375();
-            }
         }
     }
 
