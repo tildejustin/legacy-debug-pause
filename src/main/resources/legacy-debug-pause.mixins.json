@@ -1,10 +1,10 @@
 {
   "required": true,
-  "package": "dev.tildejustin.example.mixin",
+  "package": "dev.tildejustin.legacy_debug_pause.mixin",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
-  ],
   "client": [
+    "GameMenuScreenMixin",
+    "MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

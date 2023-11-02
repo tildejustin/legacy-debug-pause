@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "legacy-debug-pause",
   "version": "${version}",
-  "name": "",
-  "description": "",
+  "name": "Legacy Debug Pause",
+  "description": "backport f3 + esc pause to legacy fabric",
   "authors": [
     "tildejustin"
   ],
   "contact": {
-    "homepage": "https://modrinth.com/mod/modid",
-    "sources": "https://github.com/tildejustin/modid",
-    "issues": "https://github.com/tildejustin/modid/issues"
+    "homepage": "https://modrinth.com/mod/legacy-debug-pause",
+    "sources": "https://github.com/tildejustin/legacy-debug-pause",
+    "issues": "https://github.com/tildejustin/legacy-debug-pause/issues"
   },
   "license": "MIT",
   "environment": "*",
   "mixins": [
-    "modid.mixins.json"
+    "legacy-debug-pause.mixins.json"
   ],
   "depends": {
     "minecraft": "*"

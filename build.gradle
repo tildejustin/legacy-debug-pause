@@ -16,14 +16,11 @@ repositories {
     flatDir { dirs "libs" }
 }
 
-//loom {
-//	legacyLooming.setIntermediaryVersion(2)
-//}
-
 dependencies {
     minecraft "com.mojang:minecraft:$minecraft_version"
     mappings(legacy.yarn(minecraft_version, yarn_build))
     modImplementation "net.fabricmc:fabric-loader:$loader_version"
+    include(implementation(annotationProcessor "io.github.llamalad7:mixinextras-fabric:0.2.1-beta.2"))
 }
 
 processResources {
@@ -38,7 +35,6 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
-    // withSourcesJar()
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
