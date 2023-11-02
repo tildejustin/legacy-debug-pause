@@ -1,7 +1,7 @@
 package dev.tildejustin.legacy_debug_pause.mixin;
 
 import dev.tildejustin.legacy_debug_pause.interfaces.IGameMenuScreen;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.sound.SoundSystem;
@@ -14,23 +14,23 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(MinecraftClient.class)
-public abstract class MinecraftClientMixin {
+@Mixin(Minecraft.class)
+public abstract class MinecraftMixin {
     @Shadow
     @Nullable
     public Screen currentScreen;
 
     @Shadow
-    public abstract void setScreen(@Nullable Screen screen);
+    public abstract void openScreen(Screen screen);
 
     @Shadow
     public abstract boolean isInSingleplayer();
 
     @Shadow
-    private @Nullable IntegratedServer server;
+    private IntegratedServer server;
 
     @Shadow
-    public SoundSystem field_3759;
+    public SoundSystem soundSystem;
 
     @SuppressWarnings("DataFlowIssue")
     @Unique
@@ -38,18 +38,18 @@ public abstract class MinecraftClientMixin {
         if (this.currentScreen == null) {
             GameMenuScreen screen = new GameMenuScreen();
             if (pause) ((IGameMenuScreen) screen).hideMenu();
-            this.setScreen(screen);
+            this.openScreen(screen);
             if (this.isInSingleplayer() && !this.server.isPublished()) {
-                this.field_3759.method_4375();
+                this.soundSystem.method_4375();
             }
         }
     }
 
     @Redirect(
             method = "tick",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;openGameMenuScreen()V")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;openGameMenuScreen()V")
     )
-    private void openGameMenuWithPauseInTick(MinecraftClient instance) {
+    private void openGameMenuWithPauseInTick(Minecraft instance) {
         boolean hide = Keyboard.isKeyDown(Keyboard.KEY_F3);
         openGameMenuScreen(hide);
     }
