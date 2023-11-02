@@ -4,11 +4,15 @@ plugins {
     id "maven-publish"
 }
 
-version = "$mod_version+$target_version"
-group = maven_group
+version "$mod_version+$target_version"
+group maven_group
 
 base {
     archivesName = archives_name
+}
+
+legacyLooming {
+    intermediaryVersion = 2
 }
 
 repositories {
@@ -30,13 +34,13 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = "UTF-8"
+    it.options.encoding "UTF-8"
     it.options.release.set(8)
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
 }
 
 jar {

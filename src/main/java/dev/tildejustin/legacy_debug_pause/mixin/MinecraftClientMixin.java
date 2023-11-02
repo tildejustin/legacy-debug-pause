@@ -39,30 +39,17 @@ public abstract class MinecraftClientMixin {
             GameMenuScreen screen = new GameMenuScreen();
             if (pause) ((IGameMenuScreen) screen).hideMenu();
             this.setScreen(screen);
-            if (this.isInSingleplayer() && !this.server.isPublished()) {
+            if (this.isInSingleplayer() && !this.server.method_3860()) {
                 this.soundManager.pauseAll();
             }
         }
     }
 
     @Redirect(
-            method = "tickKeyboard",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;openGameMenuScreen()V"),
-            require = 0
+            method = "method_0_9750",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;method_1486()V")
     )
     private void openGameMenuWithPause(MinecraftClient instance) {
-        boolean hide = Keyboard.isKeyDown(Keyboard.KEY_F3);
-        openGameMenuScreen(hide);
-    }
-
-    // method_2954 -> MinecraftClient::tick, pre-1.9
-    @SuppressWarnings({"UnresolvedMixinReference", "MixinAnnotationTarget"})
-    @Redirect(
-            method = "method_2954",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;openGameMenuScreen()V"),
-            require = 0
-    )
-    private void openGameMenuWithPauseInTick(MinecraftClient instance) {
         boolean hide = Keyboard.isKeyDown(Keyboard.KEY_F3);
         openGameMenuScreen(hide);
     }
