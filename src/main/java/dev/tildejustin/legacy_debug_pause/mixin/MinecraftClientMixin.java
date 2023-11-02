@@ -46,21 +46,8 @@ public abstract class MinecraftClientMixin {
     }
 
     @Redirect(
-            method = "tickKeyboard",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;openGameMenuScreen()V"),
-            require = 0
-    )
-    private void openGameMenuWithPause(MinecraftClient instance) {
-        boolean hide = Keyboard.isKeyDown(Keyboard.KEY_F3);
-        openGameMenuScreen(hide);
-    }
-
-    // method_2954 -> MinecraftClient::tick, pre-1.9
-    @SuppressWarnings({"UnresolvedMixinReference", "MixinAnnotationTarget"})
-    @Redirect(
-            method = "method_2954",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;openGameMenuScreen()V"),
-            require = 0
+            method = "tick",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;openGameMenuScreen()V")
     )
     private void openGameMenuWithPauseInTick(MinecraftClient instance) {
         boolean hide = Keyboard.isKeyDown(Keyboard.KEY_F3);

@@ -25,19 +25,26 @@ public abstract class GameMenuScreenMixin extends Screen implements IGameMenuScr
         showMenu = false;
     }
 
-    @Inject(method = "init", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "method_21947", at = @At("HEAD"), cancellable = true)
     private void stopButtonRender(CallbackInfo ci) {
         if (!showMenu) ci.cancel();
     }
 
     @SuppressWarnings("unused")
-    @WrapWithCondition(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/GameMenuScreen;renderBackground()V"))
+    @WrapWithCondition(
+            method = "method_21925",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/GameMenuScreen;method_21946()V")
+    )
     private boolean stopBackgroundRender(GameMenuScreen screen) {
         return showMenu;
     }
 
 
-    @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/GameMenuScreen;drawCenteredString(Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V"), index = 3)
+    @ModifyArg(
+            method = "method_21925",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/GameMenuScreen;method_21881(Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V"),
+            index = 3
+    )
     private int modifyPauseTextHeight(int y) {
         if (!showMenu) return 10;
         return y;
