@@ -4,7 +4,7 @@ import dev.tildejustin.legacy_debug_pause.interfaces.IGameMenuScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.sound.SoundManager;
+import net.minecraft.client.sound.SoundSystem;
 import net.minecraft.server.integrated.IntegratedServer;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.input.Keyboard;
@@ -30,7 +30,7 @@ public abstract class MinecraftClientMixin {
     private @Nullable IntegratedServer server;
 
     @Shadow
-    private SoundManager soundManager;
+    public SoundSystem field_3759;
 
     @SuppressWarnings("DataFlowIssue")
     @Unique
@@ -40,7 +40,7 @@ public abstract class MinecraftClientMixin {
             if (pause) ((IGameMenuScreen) screen).hideMenu();
             this.setScreen(screen);
             if (this.isInSingleplayer() && !this.server.isPublished()) {
-                this.soundManager.pauseAll();
+                this.field_3759.method_4375();
             }
         }
     }
